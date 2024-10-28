@@ -6,16 +6,8 @@ namespace App\Http\Controllers;
 use App\Models\Link;
 use Illuminate\Http\Request;
 
-class LinkController extends Controller
-{
+class LinkController extends Controller {
     public function store(Request $request){
-
-        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $resultado = '';
-
-        for ($i = 0; $i < 10; $i++) {
-            $resultado .= $caracteres[random_int(0, strlen($caracteres) - 1)];
-        }
 
         $link = new Link();
         $link->link = $request->link;
@@ -25,8 +17,7 @@ class LinkController extends Controller
         return response()->json($link, 201);
     }
 
-    private function generateUniqueIdentifier($length = 10)
-    {
+    private function generateUniqueIdentifier($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         do {
             $identifier = '';
@@ -38,14 +29,29 @@ class LinkController extends Controller
         return $identifier;
     }
 
-    public function show($identifier)
-    {
+    public function show($identifier) {
+
+
         $link = Link::where('identifier', $identifier)->first();
 
         if (!$link) {
             return response()->json(['message' => 'Link not found'], 404);
         }
 
-        return response()->json($link);
+     
+        $blocks = $link->locks;
+
+        $blocksWithCategories = $blocks->map(function($block) {
+            return [
+                'block' => $block,
+                'category' => $block->category, 
+            ];
+        });
+
+        return view('link', ['link' => $link]);
+
+
+        
+        
     }
 }
