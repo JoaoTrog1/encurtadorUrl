@@ -17,7 +17,9 @@ class Category extends Model
         'text',
     ];
 
-    
+    public function locks() {
+        return $this->hasMany(Lock::class, 'FkIdCategory'); 
+    }
 
 
 }

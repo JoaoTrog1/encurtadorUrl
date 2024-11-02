@@ -14,7 +14,10 @@ class Link extends Model
     protected $fillable = ['link', 'description'];
 
     public function locks() {
-        return $this->hasMany(Lock::class, 'FkIdLink'); // A chave estrangeira no modelo Lock
+        return $this->hasMany(Lock::class, 'FkIdLink'); 
     }
 }
+
+
+
 

@@ -12,7 +12,8 @@ class CreateLinkTable extends Migration
             $table->id();
             $table->string('link');
             $table->string('description')->nullable();
-            $table->string('identifier')->unique();
+            $table->string( 'identifier')->unique();
+            
             $table->timestamps();
         });
     }

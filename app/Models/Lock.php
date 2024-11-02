@@ -20,6 +20,11 @@ class Lock extends Model
     public function category() {
         return $this->belongsTo(Category::class, 'FkIdCategory');
     }
+ 
+    public function link()
+    {
+        return $this->belongsTo(Link::class, 'FkIdLink');
+    }
 
     
     

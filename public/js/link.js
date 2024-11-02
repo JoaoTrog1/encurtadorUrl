@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
             btnAcesso.disabled = false;
         }
     }
+
+    liberarAcesso();
 });
 
 function abrirLink(url) {

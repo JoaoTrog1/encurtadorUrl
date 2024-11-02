@@ -1,32 +1,18 @@
 * {
     box-sizing: border-box;
-}
-
-
-header{
-    height: 10%;
-    width: 100%;
     
-    h1{
-        margin-top: 20px;
-        text-align: center;
-        & span{
-            color: rgb(15, 222, 36);
-            font-weight: bolder;
-            font-size: xx-large;
-        }
-        font-size: large;
-    }
 }
 
-main{
+
+.conteiner{
     
     h1{
         font-size: xx-large;
         font-weight: bold; 
         font-family: 'Courier New', Courier, monospace;
+        color: rgb(13, 12, 12);
     }
-    height: 80%;
+    height: 100%;
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -72,11 +58,3 @@ main{
     }
 }
 
-footer{
-    height: 10%;
-    width: 100%;
-    p{
-        text-align: center;
-    }
-    
-}

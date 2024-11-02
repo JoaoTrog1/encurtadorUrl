@@ -12,8 +12,6 @@
 <body>
     <header>
         <h1><span>HSXITS</span>@yield('titulo')</h1>
-        @yield('btn')
-        
     </header>
 
     <main>

@@ -1,0 +1,148 @@
+.conteiner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+    width: 100%;
+    height: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    
+}
+
+.conteiner-new{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 8px #00000075;
+    border-radius: 2px;
+    height: 10%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 100%;
+    display: flex;
+}
+
+.new-link{
+    padding-left: 10px;
+    display: flex;
+    height: 100%;
+    flex-grow: 1;
+    
+    align-items: center;
+}
+
+
+.new-link p{
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+}
+
+
+.new-link-btn{
+    padding-right: 10px;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+
+.new-link-btn .btn{
+    background-color: #0fde24;
+    color: #ffffff;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+.conteiner-table{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 8px #00000075;
+    border-radius: 2px;
+    
+    height: 60%;
+    width: 100%;
+}
+
+.table {
+    display: block;
+    height: 70%;
+    overflow: hidden; 
+}
+
+.table tbody {
+    display: block;
+    height: 100%; 
+    overflow-y: auto;
+}
+
+
+
+
+.table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.theader{
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.theader p{
+    font-size: x-large;
+    padding: 0;
+    margin: 0;
+    
+}
+
+
+
+
+
+
+.link-name, .link-title {
+    white-space: nowrap;     
+    overflow: hidden;        
+    text-overflow: ellipsis; 
+    flex-grow: 1;    
+}
+
+.link-name a{
+    color: rgb(15, 222, 36);
+    
+}
+
+.hits, .edit, .delete {
+    align-items: center;
+    width: 10%;
+    text-align: center;
+}
+
+
+.tfooter{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: start;
+    padding-left: 10px;
+}
+
+.pagination .page-link {
+    background-color: #ffffff; 
+    color: rgb(0, 0, 0);
+    border: 1px solid #000000;
+}
+
+.pagination .page-link:hover {
+    background-color: rgb(15, 222, 36);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: rgb(15, 222, 36);
+    color: #ffffffc0;
+}
