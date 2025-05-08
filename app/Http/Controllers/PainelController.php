@@ -13,8 +13,6 @@ class PainelController extends Controller
         return view("/encurtador/painel/login");
     }
 
-
-
     public function login(Request $request)
     {
 
@@ -37,7 +35,7 @@ class PainelController extends Controller
     }
 
 
-    // Logout
+
     public function logout()
     {
         Auth::logout();

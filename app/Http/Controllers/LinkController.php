@@ -11,23 +11,20 @@ use Illuminate\Support\Facades\Auth;
 
 class LinkController extends Controller
 {
-   
-    
+
+
     public function index()
     {
 
         if (Auth::check()) {
-            
-            $links = Link::orderBy("created_at","desc")->paginate(10);
 
-            return view("encurtador/painel/links", ["links"=> $links]);
+            $links = Link::orderBy("created_at", "desc")->paginate(10);
+
+            return view("encurtador/painel/links", ["links" => $links]);
         }
-    
-        
-        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
 
-    
-       
+
+        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
     }
 
     /**
@@ -38,15 +35,13 @@ class LinkController extends Controller
     public function create()
     {
         if (Auth::check()) {
-            
-            $categorias = Category::all();
-            return view('encurtador/painel/create-link', ['categorias'=> $categorias]);
-        }
-    
-        
-        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
 
-       
+            $categorias = Category::all();
+            return view('encurtador/painel/create-link', ['categorias' => $categorias]);
+        }
+
+
+        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
     }
 
     /**
@@ -57,37 +52,42 @@ class LinkController extends Controller
      */
     public function store(Request $request)
     {
-       
-        $request->validate([
-            'description' => 'required|string|max:255',
-            'link' => 'required|url',
-            'categories' => 'array',
-            'locks' => 'array',
-        ]);
-    
-        $link = new Link();
-        $link->link = $request->link;
-        $link->description = $request->description;
-        $link->identifier = $this->generateUniqueIdentifier();
-       
-        $link->save();
-        
-        if ($request->locks) {
-            foreach ($request->locks as $cont => $lockDescription) {
-        
+
+        if (Auth::check()) {
+
+            $request->validate([
+                'description' => 'required|string|max:255',
+                'link' => 'required|url',
+                'categories' => 'array',
+                'locks' => 'array',
+            ]);
+
+            $link = new Link();
+            $link->link = $request->link;
+            $link->description = $request->description;
+            $link->identifier = $this->generateUniqueIdentifier();
+
+            $link->save();
+
+            if ($request->locks) {
+                foreach ($request->locks as $cont => $lockDescription) {
+
                     $lock = new Lock();
                     $lock->linkLock = $lockDescription;
                     $lock->FkIdLink = $link->id;
 
                     $lock->FkIdCategory = $request->categories[$cont];
                     $lock->save();
-
+                }
             }
-        }
-        
-        
 
-        return $link->identifier;
+
+
+            return redirect()->route('links.index')->with(['message' => 'Link criado com sucesso', 'identifier' => $link->identifier]);
+        }
+
+
+        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
     }
 
     /**
@@ -104,18 +104,8 @@ class LinkController extends Controller
             return redirect('404');
         }
 
-     
-        $blocks = $link->locks;
-
-        $blocksWithCategories = $blocks->map(function($block) {
-            return [
-                'block' => $block,
-                'category' => $block->categories, 
-            ];
-        });
 
         return view('encurtador/link', ['link' => $link]);
-        
     }
 
     /**
@@ -126,7 +116,17 @@ class LinkController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (Auth::check()) {
+
+            $link = Link::find($id);
+            if ($link) {
+                $categorias = Category::all();
+                return view('encurtador/painel/edit-link', ['categorias' => $categorias, 'link' => $link]);
+            }
+        }
+
+
+        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
     }
 
     /**
@@ -138,7 +138,45 @@ class LinkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (Auth::check()) {
+
+            $request->validate([
+                'description' => 'required|string|max:255',
+                'link' => 'required|url',
+                'categories' => 'array',
+                'locks' => 'array',
+            ]);
+
+            $link = Link::find($id);
+            if ($link) {
+                $link->link = $request->link;
+                $link->description = $request->description;
+                
+
+                $link->save();
+
+                $deleted = $link->locks()->delete();
+
+                if ($request->locks) {
+                    foreach ($request->locks as $cont => $lockDescription) {
+
+                        $lock = new Lock();
+                        $lock->linkLock = $lockDescription;
+                        $lock->FkIdLink = $link->id;
+
+                        $lock->FkIdCategory = $request->categories[$cont];
+                        $lock->save();
+                    }
+                }
+            }
+            return redirect()->route('links.index')->with(['message' => 'Link editado com sucesso', 'identifier' => $link->identifier]);
+        
+            
+        }
+
+
+        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
+    
     }
 
     /**
@@ -149,11 +187,21 @@ class LinkController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Auth::check()) {
+            $link = Link::find($id);
+            if ($link) {
+                
+                $link->delete();
+            }
+            return redirect()->route('links.index')->with(['message' => 'Link deletado com sucesso']);
+        
+        }
+        return redirect()->route('painel')->with(['message' => 'Acesso negado.']);
     }
 
 
-    private function generateUniqueIdentifier($length = 12) {
+    private function generateUniqueIdentifier($length = 12)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         do {
             $identifier = '';

@@ -117,10 +117,19 @@
     
 }
 
+.edit a{
+    color: #000000;
+}
+
+.delete a{
+    color: #000000;
+}
+
 .hits, .edit, .delete {
     align-items: center;
     width: 10%;
     text-align: center;
+    
 }
 
 
@@ -146,3 +155,5 @@
     background-color: rgb(15, 222, 36);
     color: #ffffffc0;
 }
+
+
