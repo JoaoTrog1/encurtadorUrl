@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <h1><span>HSXITS</span>@yield('titulo')</h1>
+        <h1><span>ENCURTADOR</span>@yield('titulo')</h1>
         @yield('btn')
         
     </header>
